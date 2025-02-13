@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profesyonel Görsel Dönüştürücü</title>
+    <title>Görsel Dönüştürücü - Ana Sayfa</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -27,315 +28,311 @@
             padding: 40px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            max-width: 900px;
+            max-width: 1200px;
             width: 100%;
         }
 
-        h1 {
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
             color: #2d3748;
-            text-align: center;
-            margin-bottom: 20px;
             font-size: 2.5em;
+            margin-bottom: 15px;
         }
 
-        .description {
-            text-align: center;
+        .header p {
+            color: #718096;
+            font-size: 1.1em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+            gap: 10px;
+        }
+
+        .nav-link {
             color: #4a5568;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-
-        .upload-form {
-            text-align: center;
-        }
-
-        .drop-zone {
-            border: 2px dashed #764ba2;
-            border-radius: 15px;
-            padding: 40px 20px;
-            margin: 20px 0;
-            cursor: pointer;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
             transition: all 0.3s ease;
         }
 
-        .drop-zone:hover {
-            background: rgba(118, 75, 162, 0.05);
+        .nav-link:hover {
+            background: #edf2f7;
         }
 
-        .drop-zone.dragover {
-            background: rgba(118, 75, 162, 0.1);
-            border-color: #667eea;
-        }
-
-        .file-input {
-            display: none;
-        }
-
-        .submit-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .nav-link.active {
+            background: #667eea;
             color: white;
-            padding: 15px 40px;
-            border: none;
-            border-radius: 10px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon i {
+            font-size: 24px;
+            color: white;
+        }
+
+        .feature-title {
+            font-size: 1.2em;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .feature-description {
+            color: #718096;
+            line-height: 1.6;
+        }
+
+        .feature-list {
+            margin-top: 15px;
+            list-style: none;
+        }
+
+        .feature-list li {
+            color: #4a5568;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-list li i {
+            color: #667eea;
+            font-size: 0.9em;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin-top: 50px;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .cta-title {
+            font-size: 1.5em;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+
+        .cta-description {
+            color: #718096;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            padding: 12px 30px;
+            border-radius: 8px;
             font-size: 1.1em;
-            cursor: pointer;
+            text-decoration: none;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        .cta-btn.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
         }
 
-        .supported-formats {
-            margin-top: 30px;
+        .cta-btn.secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer {
+            margin-top: 50px;
             text-align: center;
             color: #718096;
             font-size: 0.9em;
         }
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 40px 0;
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
         }
 
-        .feature {
-            text-align: center;
-            padding: 20px;
+        .footer a:hover {
+            text-decoration: underline;
         }
 
-        .feature-icon {
-            font-size: 2em;
-            color: #764ba2;
-            margin-bottom: 10px;
-        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
 
-        #loading {
-            display: none;
-            text-align: center;
-            margin-top: 20px;
-        }
+            .header h1 {
+                font-size: 2em;
+            }
 
-        .progress {
-            width: 100%;
-            height: 10px;
-            background: #e2e8f0;
-            border-radius: 5px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
+            .features {
+                grid-template-columns: 1fr;
+            }
 
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 5px;
-            transition: width 0.3s ease;
-        }
-
-        #selected-files {
-            margin: 20px 0;
-            text-align: left;
-            max-height: 150px;
-            overflow-y: auto;
-        }
-
-        .file-item {
-            padding: 5px 10px;
-            margin: 5px 0;
-            background: #f7fafc;
-            border-radius: 5px;
-            font-size: 0.9em;
-        }
-
-        .dimensions-input {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .dimension-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .dimension-group label {
-            font-size: 0.9em;
-            color: #4a5568;
-        }
-
-        .dimension-group input {
-            width: 120px;
-            padding: 8px;
-            border: 2px solid #e2e8f0;
-            border-radius: 5px;
-            font-size: 1em;
-            transition: border-color 0.2s;
-        }
-
-        .dimension-group input:focus {
-            border-color: #667eea;
-            outline: none;
-        }
-
-        .preset-btn {
-            background: #e2e8f0;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9em;
-            color: #4a5568;
-            transition: all 0.2s;
-        }
-
-        .preset-btn:hover {
-            background: #cbd5e0;
-            transform: translateY(-1px);
+            .cta-section {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Profesyonel Görsel Dönüştürücü</h1>
-        <p class="description">
-            Yüksek kaliteli görsel dönüştürme aracı<br>
-            Orijinal kaliteyi %100 korur
-        </p>
+        <div class="header">
+            <h1>Görsel Dönüştürücü</h1>
+            <p>Görsellerinizi profesyonel bir şekilde düzenleyin, dönüştürün ve özelleştirin. Hızlı, kolay ve güvenli.</p>
+        </div>
+
+        <div class="nav-menu">
+            <a href="/" class="nav-link active"><i class="fas fa-home"></i> Ana Sayfa</a>
+            <a href="/basic" class="nav-link"><i class="fas fa-crop-simple"></i> Temel</a>
+            <a href="/advanced" class="nav-link"><i class="fas fa-wand-magic-sparkles"></i> Gelişmiş</a>
+            <a href="/filters" class="nav-link"><i class="fas fa-palette"></i> Filtreler</a>
+            <a href="/watermark" class="nav-link"><i class="fas fa-copyright"></i> Filigran</a>
+            <a href="/batch" class="nav-link"><i class="fas fa-layer-group"></i> Toplu</a>
+        </div>
 
         <div class="features">
-            <div class="feature">
-                <div class="feature-icon">🎯</div>
-                <h3>Hassas Boyutlandırma</h3>
-                <p>1080x1620 boyutuna optimize eder</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">✨</div>
-                <h3>Kalite Koruması</h3>
-                <p>Orijinal kaliteyi korur</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🔄</div>
-                <h3>Toplu İşlem</h3>
-                <p>Çoklu dosya desteği</p>
+            <a href="/basic" class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-crop-simple"></i>
+                </div>
+                <h2 class="feature-title">Temel Düzenleme</h2>
+                <p class="feature-description">Görsellerinizi hızlı ve kolay bir şekilde düzenleyin.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Boyutlandırma</li>
+                    <li><i class="fas fa-check"></i> Döndürme</li>
+                    <li><i class="fas fa-check"></i> Format Dönüştürme</li>
+                    <li><i class="fas fa-check"></i> Kalite Ayarı</li>
+                </ul>
+            </a>
+
+            <a href="/advanced" class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-wand-magic-sparkles"></i>
+                </div>
+                <h2 class="feature-title">Gelişmiş Efektler</h2>
+                <p class="feature-description">Profesyonel görsel efektleri ile fotoğraflarınızı geliştirin.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Parlaklık ve Kontrast</li>
+                    <li><i class="fas fa-check"></i> Keskinlik Ayarı</li>
+                    <li><i class="fas fa-check"></i> Renk Doygunluğu</li>
+                    <li><i class="fas fa-check"></i> Özel Efektler</li>
+                </ul>
+            </a>
+
+            <a href="/filters" class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h2 class="feature-title">Filtreler</h2>
+                <p class="feature-description">Hazır filtreler ile görsellerinize profesyonel görünüm kazandırın.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Siyah Beyaz</li>
+                    <li><i class="fas fa-check"></i> Sepya</li>
+                    <li><i class="fas fa-check"></i> Vintage</li>
+                    <li><i class="fas fa-check"></i> HDR Efekti</li>
+                </ul>
+            </a>
+
+            <a href="/watermark" class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-copyright"></i>
+                </div>
+                <h2 class="feature-title">Filigran</h2>
+                <p class="feature-description">Görsellerinizi filigran ile koruyun ve markanızı güçlendirin.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Özel Metin</li>
+                    <li><i class="fas fa-check"></i> Pozisyon Seçimi</li>
+                    <li><i class="fas fa-check"></i> Şeffaflık Ayarı</li>
+                    <li><i class="fas fa-check"></i> Yazı Tipi Seçimi</li>
+                </ul>
+            </a>
+
+            <a href="/batch" class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <h2 class="feature-title">Toplu İşlem</h2>
+                <p class="feature-description">Birden fazla görseli aynı anda düzenleyin ve zaman kazanın.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Çoklu Dosya Seçimi</li>
+                    <li><i class="fas fa-check"></i> Toplu Dönüştürme</li>
+                    <li><i class="fas fa-check"></i> Otomatik İşlem</li>
+                    <li><i class="fas fa-check"></i> Hızlı Sonuç</li>
+                </ul>
+            </a>
+        </div>
+
+        <div class="cta-section">
+            <h2 class="cta-title">Hemen Başlayın</h2>
+            <p class="cta-description">
+                Görsellerinizi profesyonel bir şekilde düzenlemek için hemen başlayın. 
+                Kullanımı kolay araçlarımız ile dakikalar içinde etkileyici sonuçlar elde edin.
+            </p>
+            <div class="cta-buttons">
+                <a href="/basic" class="cta-btn primary">Temel Düzenleme ile Başla</a>
+                <a href="/batch" class="cta-btn secondary">Toplu İşlem Yap</a>
             </div>
         </div>
 
-        <form class="upload-form" action="/convert" method="post" enctype="multipart/form-data" onsubmit="return startUpload()">
-            <div class="dimensions-input">
-                <div class="dimension-group">
-                    <label for="width">Genişlik (px)</label>
-                    <input type="number" id="width" name="width" value="1080" min="1" max="10000" required>
-                </div>
-                <div class="dimension-group">
-                    <label for="height">Yükseklik (px)</label>
-                    <input type="number" id="height" name="height" value="1620" min="1" max="10000" required>
-                </div>
-                <button type="button" class="preset-btn" onclick="setPreset(1080, 1620)">1080x1620</button>
-                <button type="button" class="preset-btn" onclick="setPreset(1920, 1080)">1920x1080</button>
-                <button type="button" class="preset-btn" onclick="setPreset(1280, 720)">1280x720</button>
-            </div>
-
-            <div class="drop-zone" onclick="document.getElementById('file-input').click()">
-                <p>Dosyaları sürükleyip bırakın veya seçmek için tıklayın</p>
-                <input type="file" id="file-input" name="files" multiple accept="image/*" required class="file-input" onchange="handleFiles(this.files)">
-            </div>
-
-            <div id="selected-files"></div>
-            <button type="submit" class="submit-btn">Dönüştürmeyi Başlat</button>
-        </form>
-
-        <div id="loading">
-            <p>Dönüştürme işlemi devam ediyor...</p>
-            <div class="progress">
-                <div class="progress-bar"></div>
-            </div>
+        <div class="footer">
+            <p>© 2024 Görsel Dönüştürücü. Tüm hakları saklıdır.</p>
         </div>
-
-        <p class="supported-formats">
-            Desteklenen formatlar: PNG, JPG, JPEG, GIF, BMP, WEBP, TIFF, ICO
-        </p>
     </div>
-
-    <script>
-        const dropZone = document.querySelector('.drop-zone');
-        const fileInput = document.getElementById('file-input');
-        const selectedFiles = document.getElementById('selected-files');
-
-        // Sürükle-bırak işlemleri
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('dragover');
-        });
-
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('dragover');
-        });
-
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('dragover');
-            handleFiles(e.dataTransfer.files);
-            fileInput.files = e.dataTransfer.files;
-        });
-
-        function handleFiles(files) {
-            selectedFiles.innerHTML = '';
-            Array.from(files).forEach(file => {
-                const fileItem = document.createElement('div');
-                fileItem.className = 'file-item';
-                fileItem.textContent = `${file.name} (${formatFileSize(file.size)})`;
-                selectedFiles.appendChild(fileItem);
-            });
-        }
-
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
-
-        function startUpload() {
-            const loading = document.getElementById('loading');
-            const progressBar = document.querySelector('.progress-bar');
-            loading.style.display = 'block';
-            
-            // Sahte ilerleme animasyonu
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += Math.random() * 30;
-                if (progress > 90) progress = 90;
-                progressBar.style.width = progress + '%';
-            }, 500);
-
-            return true;
-        }
-
-        function setPreset(width, height) {
-            document.getElementById('width').value = width;
-            document.getElementById('height').value = height;
-        }
-
-        // Boyut doğrulama
-        document.getElementById('width').addEventListener('input', validateDimension);
-        document.getElementById('height').addEventListener('input', validateDimension);
-
-        function validateDimension(e) {
-            let value = parseInt(e.target.value);
-            if (value < 1) e.target.value = 1;
-            if (value > 10000) e.target.value = 10000;
-        }
-    </script>
 </body>
 </html> 

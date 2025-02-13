@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filigran - Görsel Dönüştürücü</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #718096;
+        }
+
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 10px;
+        }
+
+        .nav-link {
+            color: #4a5568;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: #edf2f7;
+        }
+
+        .nav-link.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 30px;
+        }
+
+        .settings-panel {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        .preview-panel {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .settings-group {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .settings-group h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4a5568;
+            font-size: 0.95em;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            color: #4a5568;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="number"]:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .form-group input[type="range"] {
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .form-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .form-group input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .form-group input[type="color"] {
+            width: 50px;
+            height: 50px;
+            padding: 0;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .position-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .position-option {
+            background: #f8f9fa;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .position-option:hover {
+            background: #edf2f7;
+        }
+
+        .position-option.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .drop-zone {
+            border: 2px dashed #764ba2;
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(118, 75, 162, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .drop-zone:hover {
+            background: rgba(118, 75, 162, 0.1);
+        }
+
+        .drop-zone.dragover {
+            background: rgba(118, 75, 162, 0.15);
+            border-color: #667eea;
+        }
+
+        .preview-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: #edf2f7;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 400px;
+            display: none;
+        }
+
+        .watermark-preview {
+            position: absolute;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .value-display {
+            background: #edf2f7;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #4a5568;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            margin-left: 5px;
+            color: #a0aec0;
+        }
+
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            background: #2d3748;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            white-space: nowrap;
+            z-index: 1;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 5px;
+        }
+
+        .file-list {
+            margin-top: 15px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            transition: transform 0.2s;
+        }
+
+        .file-item:hover {
+            transform: translateX(5px);
+        }
+
+        .file-item .remove-file {
+            color: #e53e3e;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+
+        .file-name {
+            flex: 1;
+            margin-right: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .progress {
+            width: 100%;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Filigran</h1>
+            <p>Görsellerinize profesyonel filigranlar ekleyin</p>
+        </div>
+
+        <div class="nav-menu">
+            <a href="/" class="nav-link"><i class="fas fa-home"></i> Ana Sayfa</a>
+            <a href="/basic" class="nav-link"><i class="fas fa-crop-simple"></i> Temel</a>
+            <a href="/advanced" class="nav-link"><i class="fas fa-wand-magic-sparkles"></i> Gelişmiş</a>
+            <a href="/filters" class="nav-link"><i class="fas fa-palette"></i> Filtreler</a>
+            <a href="/watermark" class="nav-link active"><i class="fas fa-copyright"></i> Filigran</a>
+        </div>
+
+        <form action="/convert" method="post" enctype="multipart/form-data" onsubmit="return startUpload()">
+            <div class="content-wrapper">
+                <div class="settings-panel">
+                    <div class="settings-group">
+                        <h3><i class="fas fa-font"></i> Filigran Metni</h3>
+                        <div class="form-group">
+                            <label>
+                                Metin
+                                <div class="tooltip" data-tooltip="Filigran olarak eklenecek metin">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                            </label>
+                            <input type="text" name="watermark" placeholder="© 2024 Şirket Adı" oninput="updatePreview()">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Yazı Boyutu
+                                <div class="tooltip" data-tooltip="Filigran metninin boyutu">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                            </label>
+                            <input type="range" name="font_size" min="10" max="100" value="20" oninput="updateValue(this)">
+                            <span class="value-display" id="font_size-value">20px</span>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <h3><i class="fas fa-palette"></i> Görünüm</h3>
+                        <div class="form-group">
+                            <label>
+                                Renk
+                                <div class="tooltip" data-tooltip="Filigran metninin rengi">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                            </label>
+                            <input type="color" name="watermark_color" value="#FFFFFF" oninput="updatePreview()">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Opaklık
+                                <div class="tooltip" data-tooltip="Filigranın saydamlık derecesi">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                            </label>
+                            <input type="range" name="watermark_opacity" min="0" max="100" value="50" oninput="updateValue(this)">
+                            <span class="value-display" id="watermark_opacity-value">50%</span>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <h3><i class="fas fa-arrows-up-down-left-right"></i> Pozisyon</h3>
+                        <div class="position-grid">
+                            <div class="position-option" data-position="top-left" onclick="selectPosition(this)">
+                                <i class="fas fa-arrow-up-left"></i>
+                                <div>Sol Üst</div>
+                            </div>
+                            <div class="position-option" data-position="top-center" onclick="selectPosition(this)">
+                                <i class="fas fa-arrow-up"></i>
+                                <div>Üst</div>
+                            </div>
+                            <div class="position-option" data-position="top-right" onclick="selectPosition(this)">
+                                <i class="fas fa-arrow-up-right"></i>
+                                <div>Sağ Üst</div>
+                            </div>
+                            <div class="position-option" data-position="center-left" onclick="selectPosition(this)">
+                                <i class="fas fa-arrow-left"></i>
+                                <div>Sol</div>
+                            </div>
+                            <div class="position-option" data-position="center" onclick="selectPosition(this)">
+                                <i class="fas fa-dot-circle"></i>
+                                <div>Orta</div>
+                            </div>
+                            <div class="position-option" data-position="center-right" onclick="selectPosition(this)">
+                                <i class="fas fa-arrow-right"></i>
+                                <div>Sağ</div>
+                            </div>
+                            <div class="position-option" data-position="bottom-left" onclick="selectPosition(this)">
+                                <i class="fas fa-arrow-down-left"></i>
+                                <div>Sol Alt</div>
+                            </div>
+                            <div class="position-option" data-position="bottom-center" onclick="selectPosition(this)">
+                                <i class="fas fa-arrow-down"></i>
+                                <div>Alt</div>
+                            </div>
+                            <div class="position-option active" data-position="bottom-right" onclick="selectPosition(this)">
+                                <i class="fas fa-arrow-down-right"></i>
+                                <div>Sağ Alt</div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="watermark_position" value="bottom-right">
+                    </div>
+                </div>
+
+                <div class="preview-panel">
+                    <div class="drop-zone" id="dropZone">
+                        <i class="fas fa-cloud-upload-alt fa-3x" style="color: #764ba2; margin-bottom: 15px;"></i>
+                        <p>Görsel yüklemek için tıklayın veya sürükleyin</p>
+                        <input type="file" id="fileInput" name="files" accept="image/*" multiple class="file-input" hidden>
+                    </div>
+                    <div class="file-list" id="fileList"></div>
+                    <div class="preview-container">
+                        <img id="previewImage" class="preview-image">
+                        <div id="watermarkPreview" class="watermark-preview"></div>
+                    </div>
+                    <button type="submit" class="submit-btn">Filigran Ekle</button>
+                </div>
+            </div>
+        </form>
+
+        <div id="loading">
+            <p>İşleniyor...</p>
+            <div class="progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+        const previewImage = document.getElementById('previewImage');
+        const watermarkPreview = document.getElementById('watermarkPreview');
+
+        // Dosya yükleme işlemleri
+        dropZone.addEventListener('click', () => fileInput.click());
+        
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            Array.from(files).forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    addFileToList(file);
+                    
+                    // İlk dosyanın önizlemesini göster
+                    if (fileList.children.length === 1) {
+                        showPreview(file);
+                    }
+                } else {
+                    alert('Lütfen sadece görsel dosyaları seçin.');
+                }
+            });
+        }
+
+        function addFileToList(file) {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            
+            const fileName = document.createElement('span');
+            fileName.className = 'file-name';
+            fileName.textContent = file.name;
+            
+            const removeButton = document.createElement('span');
+            removeButton.className = 'remove-file';
+            removeButton.innerHTML = '<i class="fas fa-times"></i>';
+            removeButton.onclick = () => {
+                fileItem.remove();
+                if (fileList.children.length === 0) {
+                    previewImage.style.display = 'none';
+                    watermarkPreview.style.display = 'none';
+                } else {
+                    showPreview(fileList.children[0].file);
+                }
+            };
+            
+            fileItem.appendChild(fileName);
+            fileItem.appendChild(removeButton);
+            fileItem.file = file;
+            fileList.appendChild(fileItem);
+        }
+
+        function showPreview(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
+                updatePreview();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateValue(input) {
+            const display = document.getElementById(`${input.name}-value`);
+            let value = input.value;
+            
+            switch(input.name) {
+                case 'font_size':
+                    display.textContent = `${value}px`;
+                    break;
+                case 'watermark_opacity':
+                    display.textContent = `${value}%`;
+                    break;
+                default:
+                    display.textContent = value;
+            }
+
+            updatePreview();
+        }
+
+        function selectPosition(element) {
+            document.querySelectorAll('.position-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            element.classList.add('active');
+            document.querySelector('input[name="watermark_position"]').value = element.dataset.position;
+            updatePreview();
+        }
+
+        function updatePreview() {
+            if (!previewImage.src) return;
+
+            const text = document.querySelector('input[name="watermark"]').value || '© 2024';
+            const color = document.querySelector('input[name="watermark_color"]').value;
+            const opacity = document.querySelector('input[name="watermark_opacity"]').value / 100;
+            const fontSize = document.querySelector('input[name="font_size"]').value;
+            const position = document.querySelector('input[name="watermark_position"]').value;
+
+            watermarkPreview.textContent = text;
+            watermarkPreview.style.color = color;
+            watermarkPreview.style.opacity = opacity;
+            watermarkPreview.style.fontSize = `${fontSize}px`;
+            watermarkPreview.style.display = 'block';
+
+            // Pozisyon ayarları
+            const positions = {
+                'top-left': { top: '10px', left: '10px', bottom: 'auto', right: 'auto' },
+                'top-center': { top: '10px', left: '50%', bottom: 'auto', right: 'auto', transform: 'translateX(-50%)' },
+                'top-right': { top: '10px', right: '10px', bottom: 'auto', left: 'auto' },
+                'center-left': { top: '50%', left: '10px', bottom: 'auto', right: 'auto', transform: 'translateY(-50%)' },
+                'center': { top: '50%', left: '50%', bottom: 'auto', right: 'auto', transform: 'translate(-50%, -50%)' },
+                'center-right': { top: '50%', right: '10px', bottom: 'auto', left: 'auto', transform: 'translateY(-50%)' },
+                'bottom-left': { bottom: '10px', left: '10px', top: 'auto', right: 'auto' },
+                'bottom-center': { bottom: '10px', left: '50%', top: 'auto', right: 'auto', transform: 'translateX(-50%)' },
+                'bottom-right': { bottom: '10px', right: '10px', top: 'auto', left: 'auto' }
+            };
+
+            Object.assign(watermarkPreview.style, positions[position]);
+        }
+
+        // Yükleme işlemi
+        function startUpload() {
+            if (fileList.children.length === 0) {
+                alert('Lütfen en az bir görsel seçin.');
+                return false;
+            }
+            
+            document.getElementById('loading').style.display = 'block';
+            simulateProgress();
+            return true;
+        }
+
+        function simulateProgress() {
+            const progressBar = document.getElementById('progressBar');
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 30;
+                if (progress > 90) {
+                    clearInterval(interval);
+                }
+                progressBar.style.width = Math.min(progress, 90) + '%';
+            }, 500);
+        }
+
+        // Sayfa yüklendiğinde önizlemeyi güncelle
+        document.addEventListener('DOMContentLoaded', updatePreview);
+    </script>
+</body>
+</html> 

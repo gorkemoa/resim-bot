@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toplu İşlem - Görsel Dönüştürücü</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #718096;
+        }
+
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 10px;
+        }
+
+        .nav-link {
+            color: #4a5568;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: #edf2f7;
+        }
+
+        .nav-link.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 30px;
+        }
+
+        .settings-panel {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            max-height: 800px;
+            overflow-y: auto;
+        }
+
+        .preview-panel {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .settings-group {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .settings-group h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4a5568;
+            font-size: 0.95em;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .form-group input[type="range"] {
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .form-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .form-group input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            color: #4a5568;
+            transition: border-color 0.2s;
+            cursor: pointer;
+            background: white;
+        }
+
+        .form-group select:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-group:hover {
+            background: #edf2f7;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .drop-zone {
+            border: 2px dashed #764ba2;
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(118, 75, 162, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .drop-zone:hover {
+            background: rgba(118, 75, 162, 0.1);
+        }
+
+        .drop-zone.dragover {
+            background: rgba(118, 75, 162, 0.15);
+            border-color: #667eea;
+        }
+
+        .file-list {
+            width: 100%;
+            max-height: 400px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+        }
+
+        .file-item:hover {
+            transform: translateX(5px);
+            background: #edf2f7;
+        }
+
+        .file-info {
+            flex: 1;
+            margin-right: 15px;
+        }
+
+        .file-name {
+            color: #2d3748;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .file-size {
+            color: #718096;
+            font-size: 0.85em;
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: #718096;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            color: #2d3748;
+            background: #e2e8f0;
+        }
+
+        .action-btn.remove {
+            color: #e53e3e;
+        }
+
+        .action-btn.remove:hover {
+            background: #fed7d7;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .submit-btn:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .value-display {
+            background: #edf2f7;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #4a5568;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            margin-left: 5px;
+            color: #a0aec0;
+        }
+
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            background: #2d3748;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            white-space: nowrap;
+            z-index: 1;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 5px;
+        }
+
+        .reset-btn {
+            background: none;
+            border: none;
+            color: #a0aec0;
+            cursor: pointer;
+            font-size: 0.9em;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .reset-btn:hover {
+            background: #edf2f7;
+            color: #4a5568;
+        }
+
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .progress {
+            width: 100%;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding: 15px;
+            background: #edf2f7;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: #4a5568;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 1.1em;
+        }
+
+        .stat-label {
+            color: #718096;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Toplu İşlem</h1>
+            <p>Birden fazla görseli aynı anda düzenleyin</p>
+        </div>
+
+        <div class="nav-menu">
+            <a href="/" class="nav-link"><i class="fas fa-home"></i> Ana Sayfa</a>
+            <a href="/basic" class="nav-link"><i class="fas fa-crop-simple"></i> Temel</a>
+            <a href="/advanced" class="nav-link"><i class="fas fa-wand-magic-sparkles"></i> Gelişmiş</a>
+            <a href="/filters" class="nav-link"><i class="fas fa-palette"></i> Filtreler</a>
+            <a href="/watermark" class="nav-link"><i class="fas fa-copyright"></i> Filigran</a>
+            <a href="/batch" class="nav-link active"><i class="fas fa-layer-group"></i> Toplu</a>
+        </div>
+
+        <form action="/convert" method="post" enctype="multipart/form-data" onsubmit="return startUpload()">
+            <div class="content-wrapper">
+                <div class="settings-panel">
+                    <div class="settings-group">
+                        <h3>
+                            <span><i class="fas fa-crop"></i> Boyutlandırma</span>
+                            <button type="button" class="reset-btn" onclick="resetGroup('resize')">
+                                <i class="fas fa-undo"></i> Sıfırla
+                            </button>
+                        </h3>
+                        <div class="form-group">
+                            <label>
+                                Genişlik (px)
+                                <div class="tooltip" data-tooltip="Görsellerin genişliği (piksel)">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                            </label>
+                            <input type="range" name="width" min="100" max="3840" value="1080" oninput="updateValue(this)">
+                            <span class="value-display" id="width-value">1080px</span>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Yükseklik (px)
+                                <div class="tooltip" data-tooltip="Görsellerin yüksekliği (piksel)">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                            </label>
+                            <input type="range" name="height" min="100" max="2160" value="1620" oninput="updateValue(this)">
+                            <span class="value-display" id="height-value">1620px</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="force_resize" name="force_resize">
+                            <label for="force_resize">Zorla boyutlandır</label>
+                            <div class="tooltip" data-tooltip="Orijinal boyuttan küçük olsa bile boyutlandır">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <h3>
+                            <span><i class="fas fa-sliders"></i> Görsel Ayarları</span>
+                            <button type="button" class="reset-btn" onclick="resetGroup('image')">
+                                <i class="fas fa-undo"></i> Sıfırla
+                            </button>
+                        </h3>
+                        <div class="form-group">
+                            <label>
+                                Kalite
+                                <div class="tooltip" data-tooltip="Görsel kalitesi (sadece JPEG ve WEBP için)">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                            </label>
+                            <input type="range" name="quality" min="1" max="100" value="90" oninput="updateValue(this)">
+                            <span class="value-display" id="quality-value">90%</span>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Çıktı Formatı
+                                <div class="tooltip" data-tooltip="Kaydedilecek dosya formatı">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                            </label>
+                            <select name="format">
+                                <option value="JPEG">JPEG</option>
+                                <option value="PNG">PNG</option>
+                                <option value="WEBP">WEBP</option>
+                            </select>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="keep_exif" name="keep_exif" checked>
+                            <label for="keep_exif">EXIF bilgilerini koru</label>
+                            <div class="tooltip" data-tooltip="Fotoğraf meta verilerini koru">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <h3>
+                            <span><i class="fas fa-magic"></i> Efektler</span>
+                            <button type="button" class="reset-btn" onclick="resetGroup('effects')">
+                                <i class="fas fa-undo"></i> Sıfırla
+                            </button>
+                        </h3>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="grayscale" name="grayscale">
+                            <label for="grayscale">Siyah Beyaz</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="sepia" name="sepia">
+                            <label for="sepia">Sepya</label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Parlaklık
+                                <div class="tooltip" data-tooltip="Görüntünün genel aydınlığını ayarlar">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                            </label>
+                            <input type="range" name="brightness" min="0" max="200" value="100" oninput="updateValue(this)">
+                            <span class="value-display" id="brightness-value">100%</span>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Kontrast
+                                <div class="tooltip" data-tooltip="Açık ve koyu tonlar arasındaki farkı ayarlar">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                            </label>
+                            <input type="range" name="contrast" min="0" max="200" value="100" oninput="updateValue(this)">
+                            <span class="value-display" id="contrast-value">100%</span>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <h3>
+                            <span><i class="fas fa-copyright"></i> Filigran</span>
+                            <button type="button" class="reset-btn" onclick="resetGroup('watermark')">
+                                <i class="fas fa-undo"></i> Sıfırla
+                            </button>
+                        </h3>
+                        <div class="form-group">
+                            <label>
+                                Filigran Metni
+                                <div class="tooltip" data-tooltip="Filigran olarak eklenecek metin">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                            </label>
+                            <input type="text" name="watermark" placeholder="© 2024 Şirket Adı">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Pozisyon
+                                <div class="tooltip" data-tooltip="Filigranın konumu">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                            </label>
+                            <select name="watermark_position">
+                                <option value="bottom-right">Sağ Alt</option>
+                                <option value="bottom-left">Sol Alt</option>
+                                <option value="top-right">Sağ Üst</option>
+                                <option value="top-left">Sol Üst</option>
+                                <option value="center">Orta</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Opaklık
+                                <div class="tooltip" data-tooltip="Filigranın saydamlık derecesi">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                            </label>
+                            <input type="range" name="watermark_opacity" min="0" max="100" value="50" oninput="updateValue(this)">
+                            <span class="value-display" id="watermark_opacity-value">50%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preview-panel">
+                    <div class="drop-zone" id="dropZone">
+                        <i class="fas fa-cloud-upload-alt fa-3x" style="color: #764ba2; margin-bottom: 15px;"></i>
+                        <p>Görsel yüklemek için tıklayın veya sürükleyin</p>
+                        <input type="file" id="fileInput" name="files" accept="image/*" multiple class="file-input" hidden>
+                    </div>
+
+                    <div class="file-list" id="fileList"></div>
+
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalFiles">0</div>
+                            <div class="stat-label">Toplam Dosya</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalSize">0 MB</div>
+                            <div class="stat-label">Toplam Boyut</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="avgSize">0 MB</div>
+                            <div class="stat-label">Ortalama Boyut</div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn" disabled>
+                        Dönüştürmeyi Başlat
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <div id="loading">
+            <p>İşleniyor...</p>
+            <div class="progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+        const submitBtn = document.getElementById('submitBtn');
+        let totalSize = 0;
+        let fileCount = 0;
+
+        // Dosya yükleme işlemleri
+        dropZone.addEventListener('click', () => fileInput.click());
+        
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            Array.from(files).forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    addFileToList(file);
+                } else {
+                    alert('Lütfen sadece görsel dosyaları seçin.');
+                }
+            });
+            updateStats();
+        }
+
+        function formatSize(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function addFileToList(file) {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            
+            const fileInfo = document.createElement('div');
+            fileInfo.className = 'file-info';
+            
+            const fileName = document.createElement('div');
+            fileName.className = 'file-name';
+            fileName.textContent = file.name;
+            
+            const fileSize = document.createElement('div');
+            fileSize.className = 'file-size';
+            fileSize.textContent = formatSize(file.size);
+            
+            fileInfo.appendChild(fileName);
+            fileInfo.appendChild(fileSize);
+            
+            const fileActions = document.createElement('div');
+            fileActions.className = 'file-actions';
+            
+            const removeButton = document.createElement('button');
+            removeButton.className = 'action-btn remove';
+            removeButton.innerHTML = '<i class="fas fa-times"></i>';
+            removeButton.onclick = () => {
+                fileItem.remove();
+                totalSize -= file.size;
+                fileCount--;
+                updateStats();
+                checkSubmitButton();
+            };
+            
+            fileActions.appendChild(removeButton);
+            
+            fileItem.appendChild(fileInfo);
+            fileItem.appendChild(fileActions);
+            fileItem.file = file;
+            
+            fileList.appendChild(fileItem);
+            totalSize += file.size;
+            fileCount++;
+            checkSubmitButton();
+        }
+
+        function updateStats() {
+            document.getElementById('totalFiles').textContent = fileCount;
+            document.getElementById('totalSize').textContent = formatSize(totalSize);
+            document.getElementById('avgSize').textContent = fileCount > 0 ? formatSize(totalSize / fileCount) : '0 B';
+        }
+
+        function checkSubmitButton() {
+            submitBtn.disabled = fileCount === 0;
+        }
+
+        function updateValue(input) {
+            const display = document.getElementById(`${input.name}-value`);
+            let value = input.value;
+            
+            switch(input.name) {
+                case 'width':
+                case 'height':
+                    display.textContent = `${value}px`;
+                    break;
+                case 'quality':
+                case 'brightness':
+                case 'contrast':
+                case 'watermark_opacity':
+                    display.textContent = `${value}%`;
+                    break;
+                default:
+                    display.textContent = value;
+            }
+        }
+
+        function resetGroup(group) {
+            switch(group) {
+                case 'resize':
+                    document.querySelector('input[name="width"]').value = 1080;
+                    document.querySelector('input[name="height"]').value = 1620;
+                    document.getElementById('force_resize').checked = false;
+                    break;
+                case 'image':
+                    document.querySelector('input[name="quality"]').value = 90;
+                    document.querySelector('select[name="format"]').value = 'JPEG';
+                    document.getElementById('keep_exif').checked = true;
+                    break;
+                case 'effects':
+                    document.getElementById('grayscale').checked = false;
+                    document.getElementById('sepia').checked = false;
+                    document.querySelector('input[name="brightness"]').value = 100;
+                    document.querySelector('input[name="contrast"]').value = 100;
+                    break;
+                case 'watermark':
+                    document.querySelector('input[name="watermark"]').value = '';
+                    document.querySelector('select[name="watermark_position"]').value = 'bottom-right';
+                    document.querySelector('input[name="watermark_opacity"]').value = 50;
+                    break;
+            }
+
+            // Tüm değerleri güncelle
+            document.querySelectorAll('input[type="range"]').forEach(input => {
+                updateValue(input);
+            });
+        }
+
+        // Yükleme işlemi
+        function startUpload() {
+            if (fileCount === 0) {
+                alert('Lütfen en az bir görsel seçin.');
+                return false;
+            }
+            
+            document.getElementById('loading').style.display = 'block';
+            simulateProgress();
+            return true;
+        }
+
+        function simulateProgress() {
+            const progressBar = document.getElementById('progressBar');
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 30;
+                if (progress > 90) {
+                    clearInterval(interval);
+                }
+                progressBar.style.width = Math.min(progress, 90) + '%';
+            }, 500);
+        }
+    </script>
+</body>
+</html> 

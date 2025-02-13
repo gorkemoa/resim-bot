@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtreler - Görsel Dönüştürücü</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #718096;
+        }
+
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 10px;
+        }
+
+        .nav-link {
+            color: #4a5568;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: #edf2f7;
+        }
+
+        .nav-link.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+        }
+
+        .filters-panel {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .preview-panel {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .filter-group {
+            margin-bottom: 20px;
+        }
+
+        .filter-group h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-option.active {
+            border: 2px solid #667eea;
+        }
+
+        .filter-preview {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+
+        .filter-name {
+            flex-grow: 1;
+            color: #4a5568;
+        }
+
+        .drop-zone {
+            border: 2px dashed #764ba2;
+            border-radius: 15px;
+            padding: 40px 20px;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(118, 75, 162, 0.05);
+            text-align: center;
+            width: 100%;
+        }
+
+        .drop-zone:hover {
+            background: rgba(118, 75, 162, 0.1);
+        }
+
+        .drop-zone.dragover {
+            background: rgba(118, 75, 162, 0.15);
+            border-color: #667eea;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .progress {
+            width: 100%;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Filtreler</h1>
+            <p>Görsellerinize profesyonel filtreler uygulayın</p>
+        </div>
+
+        <div class="nav-menu">
+            <a href="/" class="nav-link"><i class="fas fa-home"></i> Ana Sayfa</a>
+            <a href="/basic" class="nav-link"><i class="fas fa-crop-simple"></i> Temel</a>
+            <a href="/advanced" class="nav-link"><i class="fas fa-wand-magic-sparkles"></i> Gelişmiş</a>
+            <a href="/filters" class="nav-link active"><i class="fas fa-palette"></i> Filtreler</a>
+            <a href="/watermark" class="nav-link"><i class="fas fa-copyright"></i> Filigran</a>
+        </div>
+
+        <form action="/apply-filter" method="post" enctype="multipart/form-data" onsubmit="return startUpload()">
+            <div class="content-wrapper">
+                <div class="filters-panel">
+                    <div class="filter-group">
+                        <h3><i class="fas fa-palette"></i> Temel Filtreler</h3>
+                        <div class="filter-option" onclick="selectFilter('grayscale')">
+                            <div class="filter-preview" style="background: #888"></div>
+                            <span class="filter-name">Siyah Beyaz</span>
+                        </div>
+                        <div class="filter-option" onclick="selectFilter('sepia')">
+                            <div class="filter-preview" style="background: #d4a676"></div>
+                            <span class="filter-name">Sepya</span>
+                        </div>
+                        <div class="filter-option" onclick="selectFilter('vintage')">
+                            <div class="filter-preview" style="background: #c8a984"></div>
+                            <span class="filter-name">Vintage</span>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3><i class="fas fa-sun"></i> Renk Filtreleri</h3>
+                        <div class="filter-option" onclick="selectFilter('warm')">
+                            <div class="filter-preview" style="background: #ff9966"></div>
+                            <span class="filter-name">Sıcak Tonlar</span>
+                        </div>
+                        <div class="filter-option" onclick="selectFilter('cool')">
+                            <div class="filter-preview" style="background: #6699ff"></div>
+                            <span class="filter-name">Soğuk Tonlar</span>
+                        </div>
+                        <div class="filter-option" onclick="selectFilter('dramatic')">
+                            <div class="filter-preview" style="background: linear-gradient(45deg, #333, #999)"></div>
+                            <span class="filter-name">Dramatik</span>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3><i class="fas fa-star"></i> Özel Filtreler</h3>
+                        <div class="filter-option" onclick="selectFilter('hdr')">
+                            <div class="filter-preview" style="background: linear-gradient(45deg, #ff6b6b, #4ecdc4)"></div>
+                            <span class="filter-name">HDR Efekti</span>
+                        </div>
+                        <div class="filter-option" onclick="selectFilter('cinema')">
+                            <div class="filter-preview" style="background: linear-gradient(45deg, #2c3e50, #3498db)"></div>
+                            <span class="filter-name">Sinematik</span>
+                        </div>
+                        <div class="filter-option" onclick="selectFilter('polaroid')">
+                            <div class="filter-preview" style="background: #f5f5f5"></div>
+                            <span class="filter-name">Polaroid</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preview-panel">
+                    <div class="drop-zone" id="dropZone">
+                        <i class="fas fa-cloud-upload-alt fa-3x" style="color: #764ba2; margin-bottom: 15px;"></i>
+                        <p>Görsel yüklemek için tıklayın veya sürükleyin</p>
+                        <input type="file" id="fileInput" name="image" accept="image/*" class="file-input" hidden>
+                    </div>
+                    <img id="previewImage" class="preview-image" style="display: none;">
+                    <input type="hidden" id="selectedFilter" name="filter">
+                    <button type="submit" class="submit-btn">Filtreyi Uygula</button>
+                </div>
+            </div>
+        </form>
+
+        <div id="loading">
+            <p>İşleniyor...</p>
+            <div class="progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const previewImage = document.getElementById('previewImage');
+        const selectedFilterInput = document.getElementById('selectedFilter');
+
+        // Dosya yükleme işlemleri
+        dropZone.addEventListener('click', () => fileInput.click());
+        
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length) {
+                handleFile(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        function handleFile(file) {
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                    dropZone.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Lütfen bir görsel dosyası seçin.');
+            }
+        }
+
+        // Filtre seçimi
+        function selectFilter(filter) {
+            document.querySelectorAll('.filter-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            selectedFilterInput.value = filter;
+            
+            // Önizleme filtresini uygula
+            previewImage.style.filter = getFilterStyle(filter);
+        }
+
+        function getFilterStyle(filter) {
+            const filters = {
+                'grayscale': 'grayscale(100%)',
+                'sepia': 'sepia(100%)',
+                'vintage': 'sepia(50%) contrast(95%) brightness(95%)',
+                'warm': 'saturate(150%) hue-rotate(10deg)',
+                'cool': 'saturate(140%) hue-rotate(-10deg)',
+                'dramatic': 'contrast(150%) brightness(90%)',
+                'hdr': 'contrast(120%) saturate(140%) brightness(110%)',
+                'cinema': 'contrast(110%) saturate(110%) brightness(95%)',
+                'polaroid': 'contrast(90%) brightness(110%) saturate(80%)'
+            };
+            return filters[filter] || '';
+        }
+
+        // Yükleme işlemi
+        function startUpload() {
+            if (!fileInput.files.length) {
+                alert('Lütfen bir görsel seçin.');
+                return false;
+            }
+            if (!selectedFilterInput.value) {
+                alert('Lütfen bir filtre seçin.');
+                return false;
+            }
+            document.getElementById('loading').style.display = 'block';
+            simulateProgress();
+            return true;
+        }
+
+        function simulateProgress() {
+            const progressBar = document.getElementById('progressBar');
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 30;
+                if (progress > 90) {
+                    clearInterval(interval);
+                }
+                progressBar.style.width = Math.min(progress, 90) + '%';
+            }, 500);
+        }
+    </script>
+</body>
+</html> 
