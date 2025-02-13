@@ -1,0 +1,1 @@
+pyinstaller --noconfirm --onefile --windowed --add-data "templates;templates" --icon=icon.ico app.py 
