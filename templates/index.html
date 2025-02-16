@@ -4,9 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Görsel Dönüştürücü - Ana Sayfa</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        /* Yeni premium renkler ve değişkenler */
+        :root {
+            --primary-gold: #B8860B;
+            --secondary-gold: #DAA520;
+            --premium-gradient: linear-gradient(135deg, #2C3E50 0%, #3498DB 100%);
+            --premium-shadow: 0 10px 30px rgba(184, 134, 11, 0.15);
+            --premium-border: 1px solid rgba(184, 134, 11, 0.2);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,153 +24,342 @@
         }
 
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a1f25 0%, #2c3e50 100%);
             min-height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            flex-direction: column;
+            padding-top: 80px;
+            color: #e5e7eb;
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(28, 33, 39, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            padding: 15px 0;
+            border-bottom: var(--premium-border);
+        }
+
+        .header-container {
             max-width: 1200px;
-            width: 100%;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .header h1 {
-            color: #2d3748;
-            font-size: 2.5em;
-            margin-bottom: 15px;
-        }
-
-        .header p {
-            color: #718096;
-            font-size: 1.1em;
-            max-width: 600px;
             margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo i {
+            font-size: 28px;
+            color: var(--primary-gold);
+            filter: drop-shadow(0 2px 4px rgba(184, 134, 11, 0.3));
+        }
+
+        .logo-text {
+            color: #e5e7eb;
+            font-size: 1.6em;
+            font-weight: 700;
+            background: linear-gradient(to right, #B8860B, #DAA520);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .nav-menu {
             display: flex;
-            justify-content: center;
-            margin-bottom: 50px;
-            gap: 10px;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 5px;
+            border-radius: 15px;
+            border: var(--premium-border);
         }
 
         .nav-link {
-            color: #4a5568;
+            color: #e5e7eb;
             text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 5px;
+            padding: 10px 18px;
+            border-radius: 12px;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .nav-link i {
+            font-size: 18px;
+            color: var(--secondary-gold);
         }
 
         .nav-link:hover {
-            background: #edf2f7;
+            background: rgba(184, 134, 11, 0.1);
+            color: var(--primary-gold);
+            transform: translateY(-2px);
         }
 
         .nav-link.active {
-            background: #667eea;
-            color: white;
+            background: linear-gradient(135deg, rgba(184, 134, 11, 0.2) 0%, rgba(218, 165, 32, 0.2) 100%);
+            color: var(--primary-gold);
+            box-shadow: var(--premium-shadow);
+            border: var(--premium-border);
         }
 
+        /* Hero Section */
+        .hero {
+            background: var(--premium-gradient);
+            padding: 100px 0;
+            margin-bottom: 80px;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: var(--premium-border);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(184,134,11,0.1)" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,208C1248,224,1344,192,1392,176L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-repeat: no-repeat;
+            background-position: bottom;
+            background-size: cover;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to right, #B8860B, #DAA520);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            opacity: 0.9;
+            color: #e5e7eb;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .hero-btn {
+            padding: 15px 35px;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: var(--premium-border);
+        }
+
+        .hero-btn.primary {
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--secondary-gold) 100%);
+            color: #1a1f25;
+            box-shadow: var(--premium-shadow);
+        }
+
+        .hero-btn.secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--primary-gold);
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(184, 134, 11, 0.2);
+        }
+
+        /* Features Section */
         .features {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
-            margin-bottom: 50px;
+            margin-bottom: 80px;
         }
 
         .feature-card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: var(--premium-shadow);
+            transition: all 0.3s ease;
             text-decoration: none;
             color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            border: var(--premium-border);
+            backdrop-filter: blur(10px);
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(184, 134, 11, 0.15);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .feature-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--secondary-gold) 100%);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            box-shadow: var(--premium-shadow);
         }
 
         .feature-icon i {
-            font-size: 24px;
-            color: white;
+            font-size: 28px;
+            color: #1a1f25;
         }
 
         .feature-title {
-            font-size: 1.2em;
-            color: #2d3748;
-            margin-bottom: 10px;
+            font-size: 1.4em;
+            color: var(--primary-gold);
+            margin-bottom: 15px;
             font-weight: 600;
         }
 
         .feature-description {
-            color: #718096;
+            color: #e5e7eb;
             line-height: 1.6;
+            margin-bottom: 20px;
+            opacity: 0.9;
         }
 
         .feature-list {
-            margin-top: 15px;
+            margin-top: auto;
             list-style: none;
+            width: 100%;
         }
 
         .feature-list li {
-            color: #4a5568;
-            margin-bottom: 8px;
+            color: #e5e7eb;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            font-size: 0.95em;
         }
 
         .feature-list li i {
-            color: #667eea;
-            font-size: 0.9em;
+            color: var(--primary-gold);
+            font-size: 1em;
         }
 
-        .cta-section {
+        /* Stats Section */
+        .stats {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 80px 0;
+            margin-bottom: 80px;
+            border-top: var(--premium-border);
+            border-bottom: var(--premium-border);
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
             text-align: center;
-            margin-top: 50px;
-            padding: 40px;
-            background: #f8f9fa;
+        }
+
+        .stat-item {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 15px;
+            border: var(--premium-border);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--primary-gold);
+            margin-bottom: 10px;
+            background: linear-gradient(to right, var(--primary-gold), var(--secondary-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: #e5e7eb;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            max-width: 1000px;
+            margin: 0 auto 80px;
+            padding: 60px 20px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 30px;
+            box-shadow: var(--premium-shadow);
+            border: var(--premium-border);
+            backdrop-filter: blur(10px);
         }
 
         .cta-title {
-            font-size: 1.5em;
-            color: #2d3748;
+            font-size: 2.2em;
+            color: var(--primary-gold);
             margin-bottom: 20px;
+            font-weight: 700;
         }
 
         .cta-description {
-            color: #718096;
-            margin-bottom: 30px;
+            color: #e5e7eb;
+            margin-bottom: 40px;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.6;
+            font-size: 1.1em;
+            opacity: 0.9;
         }
 
         .cta-buttons {
@@ -172,167 +370,279 @@
         }
 
         .cta-btn {
-            padding: 12px 30px;
-            border-radius: 8px;
+            padding: 15px 35px;
+            border-radius: 12px;
             font-size: 1.1em;
             text-decoration: none;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border: var(--premium-border);
         }
 
         .cta-btn.primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--secondary-gold) 100%);
+            color: #1a1f25;
+            box-shadow: var(--premium-shadow);
         }
 
         .cta-btn.secondary {
-            background: white;
-            color: #667eea;
-            border: 2px solid #667eea;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--primary-gold);
         }
 
         .cta-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(184, 134, 11, 0.2);
         }
 
+        /* Footer */
         .footer {
-            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 40px 0;
             text-align: center;
-            color: #718096;
-            font-size: 0.9em;
+            margin-top: auto;
+            border-top: var(--premium-border);
         }
 
-        .footer a {
-            color: #667eea;
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer p {
+            color: #e5e7eb;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .social-link {
+            color: var(--primary-gold);
             text-decoration: none;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            border: var(--premium-border);
         }
 
-        .footer a:hover {
-            text-decoration: underline;
+        .social-link:hover {
+            transform: translateY(-3px);
+            color: var(--secondary-gold);
+            background: rgba(184, 134, 11, 0.1);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #e5e7eb;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            opacity: 0.9;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-gold);
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 20px;
+            .hero h1 {
+                font-size: 2.8em;
             }
 
-            .header h1 {
-                font-size: 2em;
+            .hero-buttons {
+                flex-direction: column;
             }
 
-            .features {
+            .stats-container {
                 grid-template-columns: 1fr;
+                gap: 20px;
             }
 
-            .cta-section {
-                padding: 20px;
+            .feature-card {
+                padding: 30px 20px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Görsel Dönüştürücü</h1>
-            <p>Görsellerinizi profesyonel bir şekilde düzenleyin, dönüştürün ve özelleştirin. Hızlı, kolay ve güvenli.</p>
-        </div>
-
-        <div class="nav-menu">
-            <a href="/" class="nav-link active"><i class="fas fa-home"></i> Ana Sayfa</a>
-            <a href="/basic" class="nav-link"><i class="fas fa-crop-simple"></i> Temel</a>
-            <a href="/advanced" class="nav-link"><i class="fas fa-wand-magic-sparkles"></i> Gelişmiş</a>
-            <a href="/filters" class="nav-link"><i class="fas fa-palette"></i> Filtreler</a>
-            <a href="/watermark" class="nav-link"><i class="fas fa-copyright"></i> Filigran</a>
-            <a href="/batch" class="nav-link"><i class="fas fa-layer-group"></i> Toplu</a>
-        </div>
-
-        <div class="features">
-            <a href="/basic" class="feature-card">
-                <div class="feature-icon">
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <i class="fas fa-camera-retro"></i>
+                <span class="logo-text">Görsel Dönüştürücü</span>
+            </a>
+            <nav class="nav-menu">
+                <a href="/" class="nav-link active">
+                    <i class="fas fa-home"></i>
+                    <span>Ana Sayfa</span>
+                </a>
+                <a href="/basic" class="nav-link">
                     <i class="fas fa-crop-simple"></i>
-                </div>
-                <h2 class="feature-title">Temel Düzenleme</h2>
-                <p class="feature-description">Görsellerinizi hızlı ve kolay bir şekilde düzenleyin.</p>
-                <ul class="feature-list">
-                    <li><i class="fas fa-check"></i> Boyutlandırma</li>
-                    <li><i class="fas fa-check"></i> Döndürme</li>
-                    <li><i class="fas fa-check"></i> Format Dönüştürme</li>
-                    <li><i class="fas fa-check"></i> Kalite Ayarı</li>
-                </ul>
-            </a>
-
-            <a href="/advanced" class="feature-card">
-                <div class="feature-icon">
+                    <span>Temel</span>
+                </a>
+                <a href="/advanced" class="nav-link">
                     <i class="fas fa-wand-magic-sparkles"></i>
-                </div>
-                <h2 class="feature-title">Gelişmiş Efektler</h2>
-                <p class="feature-description">Profesyonel görsel efektleri ile fotoğraflarınızı geliştirin.</p>
-                <ul class="feature-list">
-                    <li><i class="fas fa-check"></i> Parlaklık ve Kontrast</li>
-                    <li><i class="fas fa-check"></i> Keskinlik Ayarı</li>
-                    <li><i class="fas fa-check"></i> Renk Doygunluğu</li>
-                    <li><i class="fas fa-check"></i> Özel Efektler</li>
-                </ul>
-            </a>
-
-            <a href="/filters" class="feature-card">
-                <div class="feature-icon">
+                    <span>Gelişmiş</span>
+                </a>
+                <a href="/filters" class="nav-link">
                     <i class="fas fa-palette"></i>
-                </div>
-                <h2 class="feature-title">Filtreler</h2>
-                <p class="feature-description">Hazır filtreler ile görsellerinize profesyonel görünüm kazandırın.</p>
-                <ul class="feature-list">
-                    <li><i class="fas fa-check"></i> Siyah Beyaz</li>
-                    <li><i class="fas fa-check"></i> Sepya</li>
-                    <li><i class="fas fa-check"></i> Vintage</li>
-                    <li><i class="fas fa-check"></i> HDR Efekti</li>
-                </ul>
-            </a>
-
-            <a href="/watermark" class="feature-card">
-                <div class="feature-icon">
+                    <span>Filtreler</span>
+                </a>
+                <a href="/watermark" class="nav-link">
                     <i class="fas fa-copyright"></i>
-                </div>
-                <h2 class="feature-title">Filigran</h2>
-                <p class="feature-description">Görsellerinizi filigran ile koruyun ve markanızı güçlendirin.</p>
-                <ul class="feature-list">
-                    <li><i class="fas fa-check"></i> Özel Metin</li>
-                    <li><i class="fas fa-check"></i> Pozisyon Seçimi</li>
-                    <li><i class="fas fa-check"></i> Şeffaflık Ayarı</li>
-                    <li><i class="fas fa-check"></i> Yazı Tipi Seçimi</li>
-                </ul>
-            </a>
-
-            <a href="/batch" class="feature-card">
-                <div class="feature-icon">
+                    <span>Filigran</span>
+                </a>
+                <a href="/batch" class="nav-link">
                     <i class="fas fa-layer-group"></i>
-                </div>
-                <h2 class="feature-title">Toplu İşlem</h2>
-                <p class="feature-description">Birden fazla görseli aynı anda düzenleyin ve zaman kazanın.</p>
-                <ul class="feature-list">
-                    <li><i class="fas fa-check"></i> Çoklu Dosya Seçimi</li>
-                    <li><i class="fas fa-check"></i> Toplu Dönüştürme</li>
-                    <li><i class="fas fa-check"></i> Otomatik İşlem</li>
-                    <li><i class="fas fa-check"></i> Hızlı Sonuç</li>
-                </ul>
-            </a>
+                    <span>Toplu</span>
+                </a>
+            </nav>
         </div>
+    </header>
 
-        <div class="cta-section">
-            <h2 class="cta-title">Hemen Başlayın</h2>
-            <p class="cta-description">
-                Görsellerinizi profesyonel bir şekilde düzenlemek için hemen başlayın. 
-                Kullanımı kolay araçlarımız ile dakikalar içinde etkileyici sonuçlar elde edin.
-            </p>
-            <div class="cta-buttons">
-                <a href="/basic" class="cta-btn primary">Temel Düzenleme ile Başla</a>
-                <a href="/batch" class="cta-btn secondary">Toplu İşlem Yap</a>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Görsellerinizi Dönüştürün</h1>
+            <p>Profesyonel görsel düzenleme araçlarıyla fotoğraflarınızı kolayca düzenleyin, dönüştürün ve özelleştirin. Hızlı, kolay ve güvenli.</p>
+            <div class="hero-buttons">
+                <a href="/basic" class="hero-btn primary">Hemen Başlayın</a>
+                <a href="/batch" class="hero-btn secondary">Toplu İşlem</a>
             </div>
         </div>
+    </section>
 
-        <div class="footer">
+    <!-- Features Section -->
+    <section class="features">
+        <a href="/basic" class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-crop-simple"></i>
+            </div>
+            <h2 class="feature-title">Temel Düzenleme</h2>
+            <p class="feature-description">Görsellerinizi hızlı ve kolay bir şekilde düzenleyin.</p>
+            <ul class="feature-list">
+                <li><i class="fas fa-check"></i> Boyutlandırma</li>
+                <li><i class="fas fa-check"></i> Döndürme</li>
+                <li><i class="fas fa-check"></i> Format Dönüştürme</li>
+                <li><i class="fas fa-check"></i> Kalite Ayarı</li>
+            </ul>
+        </a>
+
+        <a href="/advanced" class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-wand-magic-sparkles"></i>
+            </div>
+            <h2 class="feature-title">Gelişmiş Efektler</h2>
+            <p class="feature-description">Profesyonel görsel efektleri ile fotoğraflarınızı geliştirin.</p>
+            <ul class="feature-list">
+                <li><i class="fas fa-check"></i> Parlaklık ve Kontrast</li>
+                <li><i class="fas fa-check"></i> Keskinlik Ayarı</li>
+                <li><i class="fas fa-check"></i> Renk Doygunluğu</li>
+                <li><i class="fas fa-check"></i> Özel Efektler</li>
+            </ul>
+        </a>
+
+        <a href="/filters" class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-palette"></i>
+            </div>
+            <h2 class="feature-title">Filtreler</h2>
+            <p class="feature-description">Hazır filtreler ile görsellerinize profesyonel görünüm kazandırın.</p>
+            <ul class="feature-list">
+                <li><i class="fas fa-check"></i> Siyah Beyaz</li>
+                <li><i class="fas fa-check"></i> Sepya</li>
+                <li><i class="fas fa-check"></i> Vintage</li>
+                <li><i class="fas fa-check"></i> HDR Efekti</li>
+            </ul>
+        </a>
+
+        <a href="/watermark" class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-copyright"></i>
+            </div>
+            <h2 class="feature-title">Filigran</h2>
+            <p class="feature-description">Görsellerinizi filigran ile koruyun ve markanızı güçlendirin.</p>
+            <ul class="feature-list">
+                <li><i class="fas fa-check"></i> Özel Metin</li>
+                <li><i class="fas fa-check"></i> Pozisyon Seçimi</li>
+                <li><i class="fas fa-check"></i> Şeffaflık Ayarı</li>
+                <li><i class="fas fa-check"></i> Yazı Tipi Seçimi</li>
+            </ul>
+        </a>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-number">10K+</div>
+                <div class="stat-label">Mutlu Kullanıcı</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">1M+</div>
+                <div class="stat-label">İşlenen Görsel</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Özel Efekt</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">99%</div>
+                <div class="stat-label">Memnuniyet</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2 class="cta-title">Hemen Başlayın</h2>
+        <p class="cta-description">
+            Görsellerinizi profesyonel bir şekilde düzenlemek için hemen başlayın. 
+            Kullanımı kolay araçlarımız ile dakikalar içinde etkileyici sonuçlar elde edin.
+        </p>
+        <div class="cta-buttons">
+            <a href="/basic" class="cta-btn primary">Temel Düzenleme ile Başla</a>
+            <a href="/batch" class="cta-btn secondary">Toplu İşlem Yap</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Hakkımızda</a>
+                <a href="#" class="footer-link">Gizlilik Politikası</a>
+                <a href="#" class="footer-link">Kullanım Şartları</a>
+                <a href="#" class="footer-link">İletişim</a>
+            </div>
             <p>© 2024 Görsel Dönüştürücü. Tüm hakları saklıdır.</p>
         </div>
-    </div>
+    </footer>
 </body>
 </html> 
