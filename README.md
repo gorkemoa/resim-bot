@@ -86,8 +86,8 @@ Bu proje MIT lisansı altında lisanslanmıştır. Detaylı bilgi için [LICENSE
 ## 📞 İletişim
 
 - GitHub: [@gorkemoa](https://github.com/gorkemoa)
-- LinkedIn: [Görkem Öztürk](https://linkedin.com/in/gorkemoa)
-- E-posta: gorkem@example.com
+- LinkedIn: [Görkem Öztürk](https://linkedin.com/in/gorkemozturk35)
+- E-posta: gorkemoa35@gmail.com
 
 ## ⭐ Bizi Destekleyin
 
