@@ -32,18 +32,80 @@
             color: #e5e7eb;
         }
 
+       /* Navbar Genel Stili */
         .main-header {
+            width: 100%;
+            background: #1c2127;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            background: rgba(28, 33, 39, 0.98);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
             z-index: 1000;
-            padding: 15px 0;
-            border-bottom: var(--premium-border);
         }
+
+        /* Menü Genel */
+        .nav-menu {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* Menü Butonları */
+        .nav-link {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            padding: 10px 15px;
+            transition: 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+
+/* Mobil Uyumlu Menü (Gizli Başlangıçta) */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+    @media (max-width: 1024px) {
+        .nav-menu {
+            position: absolute;
+            top: 70px;
+            left: -100%;
+            width: 80%;
+            height: 100vh;
+            background: rgba(28, 33, 39, 0.98);
+            border-right: var(--premium-border);
+            flex-direction: column;
+            padding: 20px;
+            transition: left 0.3s ease-in-out;
+        }
+
+    /* Menü Açılınca */
+        .nav-menu.active {
+            left: 0;
+        }
+
+        .nav-link {
+            padding: 15px 20px;
+            font-size: 18px;
+        }
+
+        .menu-toggle {
+            display: block;
+            z-index: 100;
+        }
+    }
 
         .header-container {
             max-width: 1200px;
@@ -119,6 +181,134 @@
             box-shadow: var(--premium-shadow);
             border: var(--premium-border);
         }
+
+ /* Navbar Genel Stili */
+        .main-header {
+            width: 100%;
+            background: #1c2127;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+
+    /* Menü */
+        .nav-menu {
+            display: flex;
+            gap: 15px;
+        }
+
+    /* Menü Linkleri */
+        .nav-link {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            padding: 10px 15px;
+            transition: 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+
+    /* Mobil Menü (Gizli Başlangıçta) */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        /* Tablet ve Mobil İçin */
+        @media (max-width: 1024px) {
+        .nav-menu {
+            position: absolute;
+            top: 70px;
+            left: -100%;
+            width: 100%;
+            height: 100vh;
+            background: rgba(28, 33, 39, 0.98);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: left 0.3s ease-in-out;
+            }
+
+        /* Menü Açılınca */
+        .nav-menu.active {
+            left: 0;
+            }
+
+        .nav-link {
+            padding: 15px 20px;
+            font-size: 18px;
+            }
+
+        .menu-toggle {
+            display: block;
+            font-size: 32px;
+            z-index: 100;
+            }
+        }
+
+    /* Küçük Ekranlar İçin Özel Ayarlar */
+    @media (max-width: 430px) {
+        .nav-menu {
+        width: 100%;
+        height: 100vh;
+        }
+
+        .nav-link {
+        font-size: 20px;
+        padding: 20px;
+        }
+
+        .menu-toggle {
+        font-size: 34px;
+        }
+    }
+
+    @media (max-width: 412px) {
+        .nav-menu {
+        width: 100%;
+        }
+
+        .nav-link {
+        font-size: 18px;
+        padding: 15px;
+        }
+
+        .menu-toggle {
+        font-size: 32px;
+        }
+    }
+
+    @media (max-width: 375px) {
+        .nav-menu {
+        width: 100%;
+        }
+
+        .nav-link {
+        font-size: 16px;
+        padding: 12px;
+        }
+
+        .menu-toggle {
+        font-size: 30px;
+        }
+    }
+
+
 
         /* Hero Section */
         .hero {
@@ -236,29 +426,29 @@
             transform: translateY(-10px);
             box-shadow: 0 15px 40px rgba(184, 134, 11, 0.15);
             background: rgba(255, 255, 255, 0.05);
-        }
+        }       
 
         .feature-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--secondary-gold) 100%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--secondary-gold)       100%);
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             box-shadow: var(--premium-shadow);
         }
 
         .feature-icon i {
-            font-size: 28px;
+            font-size: 24px;
             color: #1a1f25;
         }
 
         .feature-title {
-            font-size: 1.4em;
+            font-size: 1.2em;
             color: var(--primary-gold);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             font-weight: 600;
         }
 
@@ -277,17 +467,94 @@
 
         .feature-list li {
             color: #e5e7eb;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 0.95em;
+            font-size: 0.9em;
         }
 
         .feature-list li i {
             color: var(--primary-gold);
             font-size: 1em;
         }
+
+/* Responsive design for mobile (large screens) */
+@media screen and (max-width: 768px) {
+    .features {
+        grid-template-columns: 1fr; /* Kartlar alt alta dizilecek */
+        padding: 0 10px;
+        gap: 20px;
+    }
+
+    .feature-card {
+        padding: 30px 20px;
+    }
+
+    .feature-icon {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 15px;
+    }
+
+    .feature-icon i {
+        font-size: 20px;
+    }
+
+    .feature-title {
+        font-size: 1.1em;
+        margin-bottom: 10px;
+    }
+
+    .feature-description {
+        font-size: 0.9em;
+        margin-bottom: 15px;
+    }
+
+    .feature-list li {
+        font-size: 0.85em;
+        margin-bottom: 8px;
+    }
+
+    .feature-list li i {
+        font-size: 0.9em;
+    }
+}
+
+/* Responsive design for 820px to 853px screens */
+@media screen and (min-width: 820px) and (max-width: 853px) {
+    .features {
+        grid-template-columns: 1fr; /* Kartlar alt alta dizilecek */
+        padding: 0 10px;
+        gap: 20px;
+    }
+}
+
+/* Responsive design for smaller screens (extra small screens) */
+@media screen and (max-width: 480px) {
+    .feature-title {
+        font-size: 1em;
+    }
+
+    .feature-description {
+        font-size: 0.85em;
+    }
+
+    .feature-list li {
+        font-size: 0.8em;
+        margin-bottom: 6px;
+    }
+
+    .feature-icon {
+        width: 45px;
+        height: 45px;
+        margin-bottom: 10px;
+    }
+
+    .feature-icon i {
+        font-size: 18px;
+    }
+}
 
         /* Stats Section */
         .stats {
@@ -491,6 +758,9 @@
                 <i class="fas fa-camera-retro"></i>
                 <span class="logo-text">Görsel Dönüştürücü</span>
             </a>
+            <button class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
             <nav class="nav-menu">
                 <a href="/" class="nav-link active">
                     <i class="fas fa-home"></i>
@@ -644,5 +914,42 @@
             <p>© 2024 Görsel Dönüştürücü. Tüm hakları saklıdır.</p>
         </div>
     </footer>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector(".nav-menu").classList.toggle("active");
+        }
+
+
+    function toggleMenu() {
+        const menu = document.querySelector(".nav-menu");
+        const toggleButton = document.querySelector(".menu-toggle");
+
+        menu.classList.toggle("active");
+        toggleButton.classList.toggle("active");
+
+        // Dışarı tıklayınca menüyü kapat
+        if (menu.classList.contains("active")) {
+            document.addEventListener("click", closeMenuOutside);
+        } else {
+            document.removeEventListener("click", closeMenuOutside);
+        }
+    }
+
+    function closeMenuOutside(event) {
+        const menu = document.querySelector(".nav-menu");
+        const toggleButton = document.querySelector(".menu-toggle");
+
+        if (menu.contains(event.target) || toggleButton.contains(event.target)) {
+            return;
+        }
+
+        menu.classList.remove("active");
+        toggleButton.classList.remove("active");
+        document.removeEventListener("click", closeMenuOutside);
+    }
+
+
+    </script>
 </body>
 </html> 
